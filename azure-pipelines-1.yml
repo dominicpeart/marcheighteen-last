@@ -1,0 +1,18 @@
+pool:
+  vmImage: ubuntu-latest
+stages:
+- stage: cd
+  displayName: Continuous deployment
+  jobs:
+  - job: docker_build
+    displayName: Build Docker Container image
+    steps:
+    
+    - task: Docker@2
+      inputs:
+        repository: 'dotnetwebapp'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
